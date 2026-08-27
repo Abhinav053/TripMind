@@ -30,7 +30,6 @@ AVIATION_STACK_API_KEY = (
 
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "qwen/qwen3.6-27b")
 
 WEATHER_SERVER_PATH = BASE_DIR / "custom_weather_mcp_server.py"
 UVX_COMMAND = shutil.which("uvx") or "uvx"
@@ -67,7 +66,7 @@ def _subprocess_env(**updates: str | None) -> dict[str, str]:
 # =========================================================
 
 llm = ChatGroq(
-    model=GROQ_MODEL,
+    model="llama-3.3-70b-versatile",
     api_key=_require_env("GROQ_API_KEY", GROQ_API_KEY),
 )
 
@@ -100,7 +99,7 @@ client = MultiServerMCPClient(
         "weather": {
             "transport": "stdio",
 
-            # Uses the Python executable from the active  environment.
+            # Uses the Python executable from the active Conda environment.
             "command": sys.executable,
 
             # Uses the weather server inside the current project folder.
